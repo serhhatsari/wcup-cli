@@ -1,5 +1,5 @@
 {
-  "name": "wcup",
+  "name": "wcup-22",
   "version": "0.0.1",
   "description": "CLI Tool written for World Cup 2022",
   "main": "index.js",
@@ -20,5 +20,10 @@
   "homepage": "https://github.com/serhhatsari/wcup22-cli#readme",
   "dependencies": {
     "go-npm": "^0.1.9"
+  },
+  "goBinary": {
+    "name": "wcup",
+    "path": "./bin",
+    "url": "https://github.com/serhhatsari/wcup-cli/releases/download/v{{version}}/wcup-cli{{version}}_{{platform}}_{{arch}}.tar.gz"
   }
 }
