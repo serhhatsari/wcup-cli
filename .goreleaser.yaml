@@ -1,0 +1,8 @@
+builds:
+  - binary: wcup
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - amd64

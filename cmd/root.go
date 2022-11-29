@@ -16,6 +16,14 @@ var cmdRoot = &cobra.Command{
 	},
 }
 
+var cmdHelp = &cobra.Command{
+	Use:   "--help",
+	Short: "-h",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Help")
+	},
+}
+
 func Execute() error {
 	cmdRoot.PersistentFlags().BoolVarP(&flagVerbose, "verbose", "v", false, "verbose output")
 
@@ -24,6 +32,8 @@ func Execute() error {
 	//	fmt.Fprintln(os.Stderr, err)
 	//	os.Exit(1)
 	//}
+
+	cmdRoot.AddCommand(cmdHelp)
 
 	return cmdRoot.Execute()
 

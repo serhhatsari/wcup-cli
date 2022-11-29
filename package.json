@@ -1,0 +1,24 @@
+{
+  "name": "wcup",
+  "version": "0.0.1",
+  "description": "CLI Tool written for World Cup 2022",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "go-npm install",
+    "preuninstall": "go-npm uninstall",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/serhhatsari/wcup22-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serhhatsari/wcup22-cli/issues"
+  },
+  "homepage": "https://github.com/serhhatsari/wcup22-cli#readme",
+  "dependencies": {
+    "go-npm": "^0.1.9"
+  }
+}
