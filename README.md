@@ -1,4 +1,4 @@
-# wcup-cli
+# wcup-cli <under development>  
 
  > **wcup** is a CLI for football fans who wants to follow World Cup 2022 ⚽  
 
