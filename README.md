@@ -32,6 +32,7 @@ Options:
 ```
 #### Command `groups`
 Get groups of World Cup 2022
+![Standings](https://raw.githubusercontent.com/serhhatsari/wcup-cli/master/assets/groups-command.gif)
 
 ```shell
 Usage: wcup groups

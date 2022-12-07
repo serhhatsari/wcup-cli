@@ -24,5 +24,6 @@
   "goBinary": {
     "name": "wcup",
     "path": "./bin",
-    "url": "https://github.com/serhhatsari/wcup-cli/releases/download/v{{version}}/wcup-cli_{{version}}_{{platform}}_{{arch}}.tar.gz"}
+    "url": "https://github.com/serhhatsari/wcup-cli/releases/download/v{{version}}/wcup-cli_{{version}}_{{platform}}_{{arch}}.tar.gz"
+  }
 }
