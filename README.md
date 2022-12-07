@@ -17,15 +17,17 @@ $ npm install -g wcup-22
 ```shell
 wcup <command>
 
-Commands:
+Available Commands:
   groups     Get groups  
+  
+Upcoming Commands:
   scores     Get scores of past and live fixtures
   fixtures   Get upcoming and past fixtures of a team
 
 
 Options:
   -h, --help  Show help                                          [boolean]
-  
+ 
 
 ```
 #### Command `groups`
@@ -36,15 +38,15 @@ Usage: wcup groups
 
 Options:
   -h, --help  Show help                                          [boolean]
-  -g  --group 
+  -g  --group Group Letter                                       [string]
 
 Examples:
   wcup groups -g "A"  
   
 ```
 
+## Upcoming Commands
 
-```
 #### Command `scores`
 Get scores of past and live fixtures
 
@@ -54,7 +56,7 @@ Usage: wcup scores [options]
 Options:
   -h, --help  Show help                                          [boolean]
   -l, --live  Live scores                                        [boolean]
-  -c, --country     Name of the country                                       [string]
+  -c, --country     Name of the country                          [string]
 
 Examples:
   wcup scores -t "por" -l
@@ -69,7 +71,7 @@ Usage: wcup fixtures [options]
 
 Options:
   -h, --help    Show help                                         [boolean]
-  -c, --country     Name of the country                   [string]
+  -c, --country     Name of the country                           [string]
   -n, --next    Next or upcoming matches                          [boolean]
 
 Examples:
