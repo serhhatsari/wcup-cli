@@ -1,6 +1,6 @@
 {
   "name": "wcup-22",
-  "version": "1.1.2",
+  "version": "1.2.2",
   "description": "CLI Tool written for World Cup 2022",
   "main": "index.js",
   "scripts": {

@@ -114,7 +114,6 @@ var cmdGroups = &cobra.Command{
 			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
 		})
 
-		// exchange uruguay with south korea
 		for i, team := range group.Teams {
 			if team.Name == "Uruguay" {
 				group.Teams[i], group.Teams[i+1] = group.Teams[i+1], group.Teams[i]
@@ -137,8 +136,6 @@ var cmdGroups = &cobra.Command{
 			table.Append([]string{strconv.Itoa(i) + " " + team.Name, strconv.Itoa(team.GroupPoints)})
 		}
 
-		// write the group letter in a pretty way, make it colorful
-		// use fatih/color package
 		fmt.Println(color.HiMagentaString("\nGroup " + group.Letter))
 
 		table.Render()
