@@ -106,8 +106,11 @@ var cmdGroups = &cobra.Command{
 			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
 		})
 
+		var i int
+		i = 0
 		for _, team := range group.Teams {
-			table.Append([]string{team.Name,strconv.Itoa(team.GamesPlayed),strconv.Itoa(team.Wins),  strconv.Itoa(team.Draws), strconv.Itoa(team.Losses),  strconv.Itoa(team.GoalsFor), strconv.Itoa(team.GoalsAgainst), strconv.Itoa(team.GoalDifferential), strconv.Itoa(team.GroupPoints)})
+			i++
+			table.Append([]string{strconv.Itoa(i) + " " + team.Name,strconv.Itoa(team.GamesPlayed),strconv.Itoa(team.Wins),  strconv.Itoa(team.Draws), strconv.Itoa(team.Losses),  strconv.Itoa(team.GoalsFor), strconv.Itoa(team.GoalsAgainst), strconv.Itoa(team.GoalDifferential), strconv.Itoa(team.GroupPoints)})
 		}
 
 		fmt.Println(group.Letter)
