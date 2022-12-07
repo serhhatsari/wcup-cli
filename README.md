@@ -43,8 +43,6 @@ Examples:
   
 ```
 
-
-```
 #### Command `scores`
 Get scores of past and live fixtures
 
