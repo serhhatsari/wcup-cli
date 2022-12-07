@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"sort"
+	"strings"
 
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
@@ -36,6 +37,8 @@ type AllGroups struct {
 }
 
 var flagVerbose bool
+var flagGroup string
+var availableGroups = []string{"A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c", "d", "e","f","g","h"}
 
 var cmdRoot = &cobra.Command{
 	Use:   "wcup",
@@ -72,6 +75,23 @@ var cmdGroups = &cobra.Command{
 
 
 	for _, group := range groups.Groups {
+
+		if flagGroup != "" && ( flagGroup != group.Letter  && flagGroup != strings.ToLower(group.Letter) ){
+			// check if the group is not in the available groups
+			found := false
+			for _, g := range availableGroups {
+				if g == flagGroup {
+					found = true
+					break
+				}
+			}
+			if !found {
+				fmt.Println("WARNING!\nGroup " + flagGroup + " is not a valid group.")
+				os.Exit(1)
+			}
+
+			continue
+		}
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Name", "PTS"})
@@ -180,6 +200,11 @@ func Execute() error {
 	//	fmt.Fprintln(os.Stderr, err)
 	//	os.Exit(1)
 	//}
+		
+	
+
+	cmdGroups.PersistentFlags().StringVarP(&flagGroup, "group", "g", "", "group name")
+
 
 	cmdRoot.AddCommand(cmdHelp)
 	cmdRoot.AddCommand(cmdStatus)
