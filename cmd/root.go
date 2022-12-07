@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"sort"
 
+	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -113,7 +114,10 @@ var cmdGroups = &cobra.Command{
 			table.Append([]string{strconv.Itoa(i) + " " + team.Name,strconv.Itoa(team.GamesPlayed),strconv.Itoa(team.Wins),  strconv.Itoa(team.Draws), strconv.Itoa(team.Losses),  strconv.Itoa(team.GoalsFor), strconv.Itoa(team.GoalsAgainst), strconv.Itoa(team.GoalDifferential), strconv.Itoa(team.GroupPoints)})
 		}
 
-		fmt.Println(group.Letter)
+		// write the group letter in a pretty way, make it colorful
+		// use fatih/color package
+		fmt.Println(color.HiMagentaString("\nGroup " + group.Letter))
+
 		table.Render()
 	}
 	},
