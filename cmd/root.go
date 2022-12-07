@@ -2,6 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -24,6 +28,25 @@ var cmdHelp = &cobra.Command{
 	},
 }
 
+var cmdScores = &cobra.Command{
+	Use:   "scores",
+	Short: "scores",
+	Run: func(cmd *cobra.Command, args []string) {
+		resp, err := http.Get("https://worldcupjson.net/teams/ARG")
+		if err != nil {
+		   log.Fatalln(err)
+		}
+	 //We Read the response body on the line below.
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+		   log.Fatalln(err)
+		}
+	 //Convert the body to type string
+		sb := string(body)
+		log.Printf(sb)
+	},
+}
+
 func Execute() error {
 	cmdRoot.PersistentFlags().BoolVarP(&flagVerbose, "verbose", "v", false, "verbose output")
 
@@ -34,6 +57,7 @@ func Execute() error {
 	//}
 
 	cmdRoot.AddCommand(cmdHelp)
+	cmdRoot.AddCommand(cmdScores)
 
 	return cmdRoot.Execute()
 
