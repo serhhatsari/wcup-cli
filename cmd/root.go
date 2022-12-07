@@ -5,10 +5,34 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+    "encoding/json"
+	"os"
+	"strconv"
+	"sort"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+type AllGroups struct {
+	Groups []struct {
+		Letter string `json:"letter"`
+		Teams  []struct {
+			Country          string `json:"country"`
+			Name             string `json:"name"`
+			GroupLetter      string `json:"group_letter"`
+			GroupPoints      int    `json:"group_points"`
+			Wins             int    `json:"wins"`
+			Draws            int    `json:"draws"`
+			Losses           int    `json:"losses"`
+			GamesPlayed      int    `json:"games_played"`
+			GoalsFor         int    `json:"goals_for"`
+			GoalsAgainst     int    `json:"goals_against"`
+			GoalDifferential int    `json:"goal_differential"`
+		} `json:"teams"`
+	} `json:"groups"`
+}
 
 var flagVerbose bool
 
@@ -28,22 +52,67 @@ var cmdHelp = &cobra.Command{
 	},
 }
 
-var cmdScores = &cobra.Command{
-	Use:   "scores",
-	Short: "scores",
+var cmdGroups = &cobra.Command{
+	Use:   "groups",
+	Short: "groups",
 	Run: func(cmd *cobra.Command, args []string) {
-		resp, err := http.Get("https://worldcupjson.net/teams/ARG")
+		resp, err := http.Get("https://worldcupjson.net/teams")
 		if err != nil {
 		   log.Fatalln(err)
 		}
-	 //We Read the response body on the line below.
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 		   log.Fatalln(err)
 		}
-	 //Convert the body to type string
 		sb := string(body)
-		log.Printf(sb)
+
+		var groups AllGroups
+		json.Unmarshal([]byte(sb), &groups)
+
+
+	for _, group := range groups.Groups {
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Name", "G", "W",   "D", "L", "GF", "GA", "A","PTS"})
+		
+		// colorize table
+		table.SetHeaderColor(
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+		)
+
+		// colorize columns
+		table.SetColumnColor(
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+		)
+
+		// sort group by points
+		sort.Slice(group.Teams, func(i, j int) bool {
+			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
+		})
+
+		for _, team := range group.Teams {
+			table.Append([]string{team.Name,strconv.Itoa(team.GamesPlayed),strconv.Itoa(team.Wins),  strconv.Itoa(team.Draws), strconv.Itoa(team.Losses),  strconv.Itoa(team.GoalsFor), strconv.Itoa(team.GoalsAgainst), strconv.Itoa(team.GoalDifferential), strconv.Itoa(team.GroupPoints)})
+		}
+
+		fmt.Println(group.Letter)
+		table.Render()
+	}
 	},
 }
 
@@ -57,7 +126,7 @@ func Execute() error {
 	//}
 
 	cmdRoot.AddCommand(cmdHelp)
-	cmdRoot.AddCommand(cmdScores)
+	cmdRoot.AddCommand(cmdGroups)
 
 	return cmdRoot.Execute()
 

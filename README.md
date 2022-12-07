@@ -18,6 +18,7 @@ $ npm install -g wcup-22
 wcup <command>
 
 Commands:
+  groups     Get groups  
   scores     Get scores of past and live fixtures
   fixtures   Get upcoming and past fixtures of a team
 
@@ -25,6 +26,24 @@ Commands:
 Options:
   -h, --help  Show help                                          [boolean]
   
+
+```
+#### Command `groups`
+Get groups of World Cup 2022
+
+```shell
+Usage: wcup groups
+
+Options:
+  -h, --help  Show help                                          [boolean]
+  -g  --group 
+
+Examples:
+  wcup groups -g "A"  
+  
+```
+
+
 ```
 #### Command `scores`
 Get scores of past and live fixtures
