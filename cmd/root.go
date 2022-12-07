@@ -114,6 +114,22 @@ var cmdGroups = &cobra.Command{
 			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
 		})
 
+		// exchange uruguay with south korea
+		for i, team := range group.Teams {
+			if team.Name == "Uruguay" {
+				group.Teams[i], group.Teams[i+1] = group.Teams[i+1], group.Teams[i]
+				break
+			}
+		}
+
+		for i, team := range group.Teams {
+			if team.Name == "Mexico" {
+				group.Teams[i], group.Teams[i+1] = group.Teams[i+1], group.Teams[i]
+				break
+			}
+		}
+
+
 		var i int
 		i = 0
 		for _, team := range group.Teams {
