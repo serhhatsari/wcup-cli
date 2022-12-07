@@ -19,7 +19,7 @@ wcup <command>
 
 Available Commands:
   groups     Get groups  
-  
+  status      Get information about teams  
 Upcoming Commands:
   scores     Get scores of past and live fixtures
   fixtures   Get upcoming and past fixtures of a team
@@ -42,6 +42,21 @@ Options:
 
 Examples:
   wcup groups -g "A"  
+  
+```
+
+#### Command `status`
+Get groups of World Cup 2022
+
+```shell
+Usage: wcup status
+
+Options:
+  -h, --help  Show help                                          [boolean]
+  -c  --country Country Abbrevation   Name                                         [string]
+
+Examples:
+  wcup status -c "ENG"  
   
 ```
 

@@ -74,7 +74,66 @@ var cmdGroups = &cobra.Command{
 	for _, group := range groups.Groups {
 
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Name", "G", "W",   "D", "L", "GF", "GA", "A","PTS"})
+		table.SetHeader([]string{"Name", "PTS"})
+		
+		// colorize table
+		table.SetHeaderColor(
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiMagentaColor},
+
+		)
+
+		// colorize columns
+		table.SetColumnColor(
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+	)
+
+		// sort group by points
+		sort.Slice(group.Teams, func(i, j int) bool {
+			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
+		})
+
+		var i int
+		i = 0
+		for _, team := range group.Teams {
+			i++
+			table.Append([]string{strconv.Itoa(i) + " " + team.Name, strconv.Itoa(team.GroupPoints)})
+		}
+
+		// write the group letter in a pretty way, make it colorful
+		// use fatih/color package
+		fmt.Println(color.HiMagentaString("\nGroup " + group.Letter))
+
+		table.Render()
+	}
+	},
+}
+
+var cmdStatus = &cobra.Command{
+	Use:   "status",
+	Short: "status",
+	Run: func(cmd *cobra.Command, args []string) {
+		resp, err := http.Get("https://worldcupjson.net/teams")
+		if err != nil {
+		   log.Fatalln(err)
+		}
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+		   log.Fatalln(err)
+		}
+		sb := string(body)
+
+		var groups AllGroups
+		json.Unmarshal([]byte(sb), &groups)
+
+		table := tablewriter.NewWriter(os.Stdout)
+		var i int
+		i = 0
+	for _, group := range groups.Groups {
+
+		
+		table.SetHeader([]string{"Name", "G", "W",   "D", "L", "GF", "GA", "A","Group PTS"})
 		
 		// colorize table
 		table.SetHeaderColor(
@@ -102,24 +161,14 @@ var cmdGroups = &cobra.Command{
 			tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
 		)
 
-		// sort group by points
-		sort.Slice(group.Teams, func(i, j int) bool {
-			return group.Teams[i].GroupPoints > group.Teams[j].GroupPoints
-		})
 
-		var i int
-		i = 0
 		for _, team := range group.Teams {
 			i++
 			table.Append([]string{strconv.Itoa(i) + " " + team.Name,strconv.Itoa(team.GamesPlayed),strconv.Itoa(team.Wins),  strconv.Itoa(team.Draws), strconv.Itoa(team.Losses),  strconv.Itoa(team.GoalsFor), strconv.Itoa(team.GoalsAgainst), strconv.Itoa(team.GoalDifferential), strconv.Itoa(team.GroupPoints)})
 		}
 
-		// write the group letter in a pretty way, make it colorful
-		// use fatih/color package
-		fmt.Println(color.HiMagentaString("\nGroup " + group.Letter))
-
-		table.Render()
 	}
+	table.Render()
 	},
 }
 
@@ -133,6 +182,7 @@ func Execute() error {
 	//}
 
 	cmdRoot.AddCommand(cmdHelp)
+	cmdRoot.AddCommand(cmdStatus)
 	cmdRoot.AddCommand(cmdGroups)
 
 	return cmdRoot.Execute()
