@@ -48,7 +48,7 @@ Examples:
 
 #### Command `status`
 Get groups of World Cup 2022
-
+TODO: add gif and update readme  
 ```shell
 Usage: wcup status
 
