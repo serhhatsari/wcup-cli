@@ -15,8 +15,8 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
-	"wcup/cmd/models"
-	"wcup/cmd/constants"
+	"wcup/cmd/utils/models"
+	"wcup/cmd/utils/constants"
 )
 
 

@@ -1,6 +1,7 @@
 package status
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,7 +13,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
-	"wcup/cmd/models"
+	"wcup/cmd/utils/models"
 )
 
 
@@ -79,6 +80,8 @@ for _, group := range groups.Groups {
 	}
 	
 }
+
+// TODO: print message if country not found
 
 }
 table.Render()
