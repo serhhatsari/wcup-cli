@@ -1,7 +1,6 @@
 package status
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
